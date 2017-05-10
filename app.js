@@ -22,10 +22,8 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
 app.use(morgan('dev'))
-app.use('/api/days', daysRoute );
-app.use('/',router);
-
-
+app.use('/api/days', daysRoute);
+app.use('/', router);
 
 app.use(function(err, req, res, next) {
 	console.error(err)
