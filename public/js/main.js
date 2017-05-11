@@ -1,3 +1,4 @@
+var days = 0;
 $(function initializeMap () {
 
   const fullstackAcademy = new google.maps.LatLng(40.705086, -74.009151);
@@ -122,15 +123,20 @@ $(function initializeMap () {
   // 4. Deal with adding days
   $('button.addDay').click(
     evt => {
-      // Deselect all days
+      //Deselect all days
+
       $('.day.current').removeClass('current')
 
       // Add a new day
       $(evt.target).before(
         $(`<ol class="current day"><h3><span class=day-head></span><button class=delDay>x</button></h3></ol>`)
       )
+       // var days = $('.day-head').last().text().slice(4);
+
+       // console.log($('.day-head').last(), "FDFDFD")
 
       numberDays()
+      createDays(++days);
     }
   )
 
