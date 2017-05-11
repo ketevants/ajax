@@ -1,22 +1,35 @@
 
-function createDays(num){
-$.ajax({
-  method: 'POST',
-  url: '/api/days',
-  data: {
-    number: num
-  }
-})
-.then(function (responseData) {
-  console.log(responseData)
-})
-.catch(function (errorObj) {
-  // some code to run if the request errors out
-});
-
+function createDay(num) {
+  $.ajax({
+    method: 'POST',
+    url: '/api/days',
+    data: {
+      number: num
+    }
+  })
+  .then(function (responseData) {
+    console.log(responseData)
+  })
+  .catch(function (errorObj) {
+    throw new Error();
+  });
 }
 
-
+function updateDay(dayIdx, dataId, dataType) {
+  $.ajax({
+    method: 'POST',
+    url: `/api/days/${dayIdx}/${dataType}`,
+    data: {
+      dataId: dataId
+    }
+  })
+  .then(function(responseData) {
+    console.log('UPDATED', responseData);
+  })
+  .catch(function(errorObj) {
+    throw new Error('Could not update day');
+  })
+}
 
 // $('button.addDay').click(
 //     evt => {

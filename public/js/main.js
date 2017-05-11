@@ -1,4 +1,6 @@
-var days = 0;
+var currentDay = 1;
+var lastDay = 0;
+
 $(function initializeMap () {
 
   const fullstackAcademy = new google.maps.LatLng(40.705086, -74.009151);
@@ -77,9 +79,9 @@ $(function initializeMap () {
         $(select).append(
           db[select.dataset.type].map (
             item => Object.assign(
-              $(`<option>${item.name}</option>`)[0]
+              $(`<option data-id="${item.id}">${item.name}</option>`)[0]
               , {
-                item: item,
+                item: item
               })
           )
         )
@@ -100,6 +102,10 @@ $(function initializeMap () {
               , type = $(option)
                   .closest('select')[0]
                   .dataset.type
+
+          var id = option.dataset.id;
+          console.log('currentDay', currentDay)
+          updateDay(currentDay, id, type);
 
           // Make a li out of this item
           const li = $(`<li>${item.name} <button class='del'>x</button></li>`)[0]
@@ -132,11 +138,12 @@ $(function initializeMap () {
         $(`<ol class="current day"><h3><span class=day-head></span><button class=delDay>x</button></h3></ol>`)
       )
        // var days = $('.day-head').last().text().slice(4);
-
        // console.log($('.day-head').last(), "FDFDFD")
 
       numberDays()
-      createDays(++days);
+      lastDay++
+      currentDay = lastDay;
+      createDay(lastDay);
     }
   )
 
@@ -151,6 +158,9 @@ $(function initializeMap () {
     evt => {
       $('.day.current').removeClass('current')
       const $day = $(evt.target).closest('.day')
+
+      currentDay = Number($day.find('span').text().slice(4));
+      console.log('current Day index is ', currentDay)
 
       $('li').each((_i, li) => li.marker && li.marker.setMap(null))
       $day.addClass('current')
@@ -176,6 +186,7 @@ $(function initializeMap () {
 
   // When we start, add a day
   $('button.addDay').click()
+  console.log(lastDay)
 });
 
 

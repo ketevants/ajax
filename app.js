@@ -3,7 +3,8 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var nunjucks = require('nunjucks');
-var db = require('./models');
+var db = require('./models').db;
+var Day = require('./models').Day; // for debugging
 var router = require('./routes');
 var daysRoute= require('./routes/api/days.js')
 
@@ -31,7 +32,9 @@ app.use(function(err, req, res, next) {
 	res.send(err, err.stack)
 })
 
-db.sync({force : true})
+Day.sync({force: true})
+.then(function() {
+  db.sync()
 	.then(function(){
 		console.log('db synced');
 		app.listen(3000, function(){
@@ -42,3 +45,16 @@ db.sync({force : true})
 		console.log("failed to sync")
 		console.error(err.stack)
 	})
+})
+
+// db.sync()
+// 	.then(function(){
+// 		console.log('db synced');
+// 		app.listen(3000, function(){
+// 			console.log("Listening on 3000")
+// 		})
+// 	})
+// 	.catch(function(err){
+// 		console.log("failed to sync")
+// 		console.error(err.stack)
+// 	})
