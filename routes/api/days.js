@@ -11,7 +11,7 @@ router.get('/', function(req, res, next){
   Day.findAll({})
   .then(function(days){
   //  res.send(days)
-    res.send('You GOT all the days');
+    res.send(days);
   })
   .catch(next);
 })

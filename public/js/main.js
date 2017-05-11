@@ -69,7 +69,14 @@ $(function initializeMap () {
   }
 
   // 0. Fetch the database, parsed from json to a js object
-  const db = fetch('/api').then(r => r.json())
+  const db = fetch('/api').then(r =>  r.json())
+
+
+
+
+
+
+
 
   // TODO:
   // 1. Populate the <select>s with <option>s
@@ -147,11 +154,11 @@ $(function initializeMap () {
     }
   )
 
-  function numberDays() {
-    $('.day').each((index, day) =>
-      $(day).find('.day-head').text(`day ${index + 1}`)
-    )
-  }
+  // function numberDays() {
+  //   $('.day').each((index, day) =>
+  //     $(day).find('.day-head').text(`day ${index + 1}`)
+  //   )
+  // }
 
   // 5. Deal with switching days
   $(document).on('click', '.day-head',
@@ -180,16 +187,44 @@ $(function initializeMap () {
       }
 
       $day.find('li').each((_i, li) => li.marker.setMap(currentMap))
+      var dayToDelete = Number($day.find('span').text().slice(4));
       $day.remove()
       numberDays()
+      console.log("day ", $day)
+      deleteDay(dayToDelete);
     })
 
+
+
+  function populateDays(){
+
+
+      //Deselect all days
+
+      $('.day.current').removeClass('current')
+
+      // Add a new day
+      $('.addDay').before(
+        $(`<ol class="current day"><h3><span class=day-head></span><button class=delDay>x</button></h3></ol>`)
+      )
+       // var days = $('.day-head').last().text().slice(4);
+       // console.log($('.day-head').last(), "FDFDFD")
+
+      numberDays()
+      lastDay++
+      currentDay = lastDay;
+
+    }
+
+getDays();
+
+// console.log("DAYS ",days)
   // When we start, add a day
-  $('button.addDay').click()
-  console.log(lastDay)
+// days.forEach(function(){
+//   $('button.addDay').click()
+//   console.log(lastDay)
+//  });
 });
-
-
 
 
 

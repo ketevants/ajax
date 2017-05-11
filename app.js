@@ -32,8 +32,7 @@ app.use(function(err, req, res, next) {
 	res.send(err, err.stack)
 })
 
-Day.sync({force: true})
-.then(function() {
+
   db.sync()
 	.then(function(){
 		console.log('db synced');
@@ -45,7 +44,7 @@ Day.sync({force: true})
 		console.log("failed to sync")
 		console.error(err.stack)
 	})
-})
+
 
 // db.sync()
 // 	.then(function(){
